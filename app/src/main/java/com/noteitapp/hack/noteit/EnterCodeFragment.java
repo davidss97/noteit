@@ -2,11 +2,15 @@
 
 package com.noteitapp.hack.noteit;
 
+        import android.content.Context;
         import android.os.Bundle;
         import android.support.v4.app.Fragment;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
+        import android.view.inputmethod.InputMethodManager;
+        import android.widget.ArrayAdapter;
+        import android.widget.AutoCompleteTextView;
         import android.widget.TextView;
 
 /**
@@ -41,6 +45,28 @@ public class EnterCodeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_enter_code, container, false);
         TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+
+        String[] CLAUS = new String[] {
+                "AA","AB","BA","BB"
+        };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(),
+                android.R.layout.simple_dropdown_item_1line, CLAUS);
+        AutoCompleteTextView autoComplete = (AutoCompleteTextView) rootView.findViewById(R.id.autoCompleteTextView2);
+        autoComplete.setAdapter(adapter);
+
+        InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        autoComplete.requestFocus();
+        imgr.showSoftInput(autoComplete, InputMethodManager.SHOW_IMPLICIT);
+
+
+
+
         return rootView;
+
+
     }
+
+
 }
