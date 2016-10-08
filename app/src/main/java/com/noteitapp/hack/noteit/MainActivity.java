@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0){
                 return EnterCodeFragment.newInstance(position+1);
+            }else if (position == 1){
+                return CameraImage.newInstance(position+1);
             }
             else{
                 return PlaceholderFragment.newInstance(position+1);
