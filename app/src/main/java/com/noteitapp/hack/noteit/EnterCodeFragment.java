@@ -11,11 +11,10 @@ package com.noteitapp.hack.noteit;
         import android.view.inputmethod.InputMethodManager;
         import android.widget.ArrayAdapter;
         import android.widget.AutoCompleteTextView;
+        import android.widget.Button;
         import android.widget.TextView;
+        import android.app.AlertDialog;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 
 public class EnterCodeFragment extends Fragment {
     /**
@@ -39,33 +38,40 @@ public class EnterCodeFragment extends Fragment {
         return fragment;
     }
 
+    Button find ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_enter_code, container, false);
+        find = (Button) rootView.findViewById(R.id.button2);
         TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
 
-        String[] CLAUS = new String[] {
-                "AA","AB","BA","BB"
+        String[] CLAUS = new String[]{
+                "AA", "AB", "BA", "BB"
         };
 
+        AutoCompleteTextView autoComplete = (AutoCompleteTextView) rootView.findViewById(R.id.autoCompleteTextView2);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(),
                 android.R.layout.simple_dropdown_item_1line, CLAUS);
-        AutoCompleteTextView autoComplete = (AutoCompleteTextView) rootView.findViewById(R.id.autoCompleteTextView2);
+        autoComplete.setThreshold(1);
         autoComplete.setAdapter(adapter);
 
-        InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        autoComplete.requestFocus();
-        imgr.showSoftInput(autoComplete, InputMethodManager.SHOW_IMPLICIT);
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    //autoComplete.getText();
+                }
+                catch (Exception e){
 
+                }
 
-
-
+            }
+        });
         return rootView;
-
-
     }
 
 
