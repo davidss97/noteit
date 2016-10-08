@@ -5,9 +5,11 @@ package com.noteitapp.hack.noteit;
         import android.content.Context;
         import android.os.Bundle;
         import android.support.v4.app.Fragment;
+        import android.view.KeyEvent;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
+        import android.view.inputmethod.EditorInfo;
         import android.view.inputmethod.InputMethodManager;
         import android.widget.ArrayAdapter;
         import android.widget.AutoCompleteTextView;
@@ -38,7 +40,8 @@ public class EnterCodeFragment extends Fragment {
         return fragment;
     }
 
-    Button find ;
+    Button find;
+    AutoCompleteTextView autoComplete;
 
     String[] CLAUS = new String[]{
             "AA", "AB", "BA", "BB"
@@ -49,10 +52,10 @@ public class EnterCodeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_enter_code, container, false);
         find = (Button) rootView.findViewById(R.id.button2);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+        final TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 
-        final AutoCompleteTextView autoComplete = (AutoCompleteTextView) rootView.findViewById(R.id.autoCompleteTextView2);
+
+        autoComplete = (AutoCompleteTextView) rootView.findViewById(R.id.autoCompleteTextView2);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(),
                 android.R.layout.simple_dropdown_item_1line, CLAUS);
         autoComplete.setThreshold(1);
@@ -61,22 +64,37 @@ public class EnterCodeFragment extends Fragment {
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String codi = autoComplete.getText().toString();
-                int esta = 0;
-                for (int i = 0; i < CLAUS.length; i++) {
-                    if (codi.equals(CLAUS[i])){
-                        esta = 1;
-                        Toast toastWIN = Toast.makeText(getContext(), codi, 15);
-                        toastWIN.show();
-                        break;
-                    }
-                }
-                if (esta == 0){
-                    Toast toastLOOSE = Toast.makeText(getContext(), "Image not found. Please enter a valid key", 7);
-                    toastLOOSE.show();
-                }
+                botopremut();
             }
         });
+
+        autoComplete.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
+                    botopremut();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         return rootView;
+    }
+
+    public void botopremut() {
+        String codi = autoComplete.getText().toString();
+        int esta = 0;
+        for (int i = 0; i < CLAUS.length; i++) {
+            if (codi.equals(CLAUS[i])) {
+                esta = 1;
+                Toast toastWIN = Toast.makeText(getContext(), codi, 5);
+                toastWIN.show();
+                break;
+            }
+        }
+        if (esta == 0) {
+            Toast toastLOOSE = Toast.makeText(getContext(), "Image not found. Please enter a valid key", 7);
+            toastLOOSE.show();
+        }
     }
 }

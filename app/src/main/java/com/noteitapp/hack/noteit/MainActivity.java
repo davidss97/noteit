@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
         //First fragment to show up is the second
         mViewPager.setCurrentItem(1);
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(this.mViewPager.findFocus(), InputMethodManager.SHOW_IMPLICIT);
 
     }
 
