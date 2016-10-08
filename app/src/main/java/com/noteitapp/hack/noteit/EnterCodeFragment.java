@@ -13,7 +13,7 @@ package com.noteitapp.hack.noteit;
         import android.widget.AutoCompleteTextView;
         import android.widget.Button;
         import android.widget.TextView;
-        import android.app.AlertDialog;
+        import android.widget.Toast;
 
 
 public class EnterCodeFragment extends Fragment {
@@ -40,6 +40,10 @@ public class EnterCodeFragment extends Fragment {
 
     Button find ;
 
+    String[] CLAUS = new String[]{
+            "AA", "AB", "BA", "BB"
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,12 +52,7 @@ public class EnterCodeFragment extends Fragment {
         TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
-
-        String[] CLAUS = new String[]{
-                "AA", "AB", "BA", "BB"
-        };
-
-        AutoCompleteTextView autoComplete = (AutoCompleteTextView) rootView.findViewById(R.id.autoCompleteTextView2);
+        final AutoCompleteTextView autoComplete = (AutoCompleteTextView) rootView.findViewById(R.id.autoCompleteTextView2);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(),
                 android.R.layout.simple_dropdown_item_1line, CLAUS);
         autoComplete.setThreshold(1);
@@ -62,17 +61,22 @@ public class EnterCodeFragment extends Fragment {
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    //autoComplete.getText();
+                String codi = autoComplete.getText().toString();
+                int esta = 0;
+                for (int i = 0; i < CLAUS.length; i++) {
+                    if (codi.equals(CLAUS[i])){
+                        esta = 1;
+                        Toast toastWIN = Toast.makeText(getContext(), codi, 15);
+                        toastWIN.show();
+                        break;
+                    }
                 }
-                catch (Exception e){
-
+                if (esta == 0){
+                    Toast toastLOOSE = Toast.makeText(getContext(), "Image not found. Please enter a valid key", 7);
+                    toastLOOSE.show();
                 }
-
             }
         });
         return rootView;
     }
-
-
 }
